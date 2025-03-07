@@ -27,6 +27,8 @@ public class RandomTester
         answers.add (new String ("Yes"));
         answers.add (new String ("No"));
         answers.add (new String ("Maybe"));
+        answers.add (new String ("Nice try!"));
+        answers.add (new String ("Possibly"));
     }
     
     /**
@@ -56,9 +58,28 @@ public class RandomTester
         System.out.println("The dice rolled a " + randomGenerator.nextInt(1, 7));
     }
     
-    public void getResponse()
+    public String getResponse()
     {
-        System.out.println(answers.get(randomGenerator.nextInt(3)));
+        int answer = randomGenerator.nextInt(3);
+        
+        if (answer == 0)
+        {
+            return "yes";
+        }
+        else if (answer == 1)
+        {
+            return "no";
+        }
+        else
+        {
+            return "maybe";
+        }
+    }
+    
+    public String getBetterResponse()
+    {
+        int choice = randomGenerator.nextInt(answers.size());
+        return answers.get(choice);
     }
     
     public void getNumber1(int max)
