@@ -8,11 +8,16 @@
 
 import java.util.Random;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.HashMap;
+import java.util.Iterator;
 
 public class Responder
 {
     private Random randomGenerator;
     private ArrayList<String> responses;
+    private HashMap<String, String> responsesMap;
     
     /**
      * Construct a Responder - nothing to do
@@ -21,15 +26,28 @@ public class Responder
     {
         randomGenerator = new Random();
         fillResponses();
+        responsesMap = new HashMap<>();
+        fillResponsesMap();
     }
 
     /**
      * Generate a response.
      * @return   A string that should be displayed as the response
      */
-    public String generateResponse()
+    public String generateResponse(HashSet<String> words)
     {
-        return responses.get(randomGenerator.nextInt(5));
+        String pickDefaultResponse = "I am unable to help you.";
+        
+        for (String word : words)
+        {
+            String response = responsesMap.get(word);
+            if(response != null)
+            {
+                return response;
+            }
+        }
+        
+        return pickDefaultResponse;
     }
     
     private void fillResponses()
@@ -40,6 +58,13 @@ public class Responder
         responses.add (new String ("Try Google."));
         responses.add (new String ("Ask a friend."));
         responses.add (new String ("The answer is right there!"));
+    }
+    
+    private void fillResponsesMap()
+    {
+        responsesMap.put("crash", "Restart");
+        responsesMap.put("Help", "Good luck!");
+        responsesMap.put("frozen", "That is unfortunate");
     }
     
     /*
